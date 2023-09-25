@@ -32,14 +32,20 @@ WantedBy=timers.target
 ## server startups
 
 ### mc - run.sh
-```
+```bash
 #!/bin/bash
 NUM="${1:-1536}"
 java -Xmx"$NUM"M -Xms"$NUM"M -jar server.jar nogui
 ```
 
 ### factorio - run.sh
-```
+```bash
 #!/bin/bash
 ./factorio/bin/x64/factorio --start-server save1.zip --server-settings server-settings.json --port 34198
+```
+
+## execute commands in screen sessions:
+Using screen -X stuff and a newline char at the end of command to execute.
+```bash
+/usr/bin/screen -S minecraft -X stuff "/list^M"
 ```
