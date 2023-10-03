@@ -12,7 +12,10 @@ in /etc/systemd/system
 Description=Utils to shutdown server if noone is online
 
 [Service]
-ExecStart=/home/camilo/utils/query.sh
+Type=forking
+User=camilo
+Group=camilo
+ExecStart=/usr/bin/python3 home/camilo/utils/shutdown_query.py
 ```
 
 ### utils.timer
@@ -49,3 +52,7 @@ Using screen -X stuff and a newline char at the end of command to execute.
 ```bash
 /usr/bin/screen -S minecraft -X stuff "/list^M"
 ```
+
+## ToDo
+
+* make the query easy to implement for multiple mc servers
