@@ -1,5 +1,4 @@
 import subprocess
-import json
 import time
 
 DELAY = 10 # MINUTES
@@ -18,7 +17,7 @@ def check_who():
 
 
 def check_factorio(name):
-    path = "/home/camilo/" + name + "/factorio/factorio-current.log"
+    path = "/home/camilo/" + name + "/factorio/factorio-console.log"
     subprocess.run(["/usr/bin/screen", "-S", name, "-X", "stuff", "/players\n"])
     time.sleep(0.1)
     with open(path, 'r') as file:
@@ -38,8 +37,8 @@ def check_factorio(name):
         else:
             return False
 
-
 def check_minecraft(path):
+    # alternative: get https://mcapi.us/server/status?ip=alpel.ddns.net&port=65432
     subprocess.run(["/usr/bin/screen", "-S", "minecraft", "-X", "stuff", "/list\n"])
     time.sleep(0.1)
     with open(path, 'r') as file:
@@ -48,12 +47,12 @@ def check_minecraft(path):
     end_index = last_line.find("of", start_index)
     if start_index != -1 and end_index != -1:
         resmc = last_line[start_index:end_index].strip()
-        # print("Extracted value:", resmc)
+        print("Extracted value:", resmc)
     else:
         print("MC substring error")
         return True
     if int(resmc) > 0:
-        print(f"There are {res} players online in minecraft")
+        print(f"There are {resmc} players online in minecraft")
         return True
     else:
         return False
@@ -70,6 +69,9 @@ if __name__ == "__main__":
     global funclist
     funclist = []
 
+    check_factorio("factorio_cse")
+    exit()
+        
     funclist.append(lambda: check_who())
     funclist.append(lambda: check_factorio("factorio_cse"))
     funclist.append(lambda: check_factorio("factorio_adrian"))
