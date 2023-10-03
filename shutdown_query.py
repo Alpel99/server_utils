@@ -17,7 +17,7 @@ def check_who():
 
 
 def check_factorio(name):
-    path = "/home/camilo/" + name + "/factorio/factorio-console.log"
+    path = "/home/camilo/" + name + "/factorio-console.log"
     subprocess.run(["/usr/bin/screen", "-S", name, "-X", "stuff", "/players\n"])
     time.sleep(0.1)
     with open(path, 'r') as file:
@@ -26,8 +26,9 @@ def check_factorio(name):
         #last_line = file.readlines()[-1]
         r = 0
         for line in line_list:
-            print(line)
-            if "/players" in line:
+            print(r, line)
+            # Players (3):
+            if "Players (" in line:
                 break
             if "(online)" in line:
                 r += 1
