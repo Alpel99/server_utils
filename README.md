@@ -41,7 +41,7 @@ java -Xmx"$NUM"M -Xms"$NUM"M -jar server.jar nogui
 ### factorio - run.sh
 ```bash
 #!/bin/bash
-./factorio/bin/x64/factorio --start-server save1.zip --server-settings server-settings.json --port 34198
+./factorio/bin/x64/factorio --start-server save1.zip --server-settings server-settings.json --port 34198 | tee factorio-console.log
 ```
 
 ## execute commands in screen sessions:

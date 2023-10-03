@@ -1,22 +1,21 @@
 import json, psutil, subprocess
 from http.server import BaseHTTPRequestHandler, HTTPServer
-
 from shutdown_query import checkAll, reslist
 
 # Specify the IP address and port for the server to listen on
-host = "127.0.0.1"
+host = "0.0.0.0"
 port = 8080
 
 # Create a custom request handler class that inherits from BaseHTTPRequestHandler
 class MyHandler(BaseHTTPRequestHandler):
     def do_GET(self):
-        # checkAll()
+        checkAll()
         # Create a JSON object
         # data = {"message": "Hello, this is your JSON response!"}
 
-        # res_uptime = subprocess.run(['/usr/bin/uptime'], capture_output=True)
-        # r = str(res_uptime.stdout, 'UTF-8').strip()
-        r = "16:20:00 up 30 min,  1 user,  load average: 0.01, 0.02, 0.02"
+        res_uptime = subprocess.run(['/usr/bin/uptime'], capture_output=True)
+        r = str(res_uptime.stdout, 'UTF-8').strip()
+        # r = "16:20:00 up 30 min,  1 user,  load average: 0.01, 0.02, 0.02"
         splits = r.split(',', 2)
         data = {}
         data["uptime"] = splits[0]

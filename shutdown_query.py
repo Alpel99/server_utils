@@ -1,7 +1,7 @@
 import subprocess
 import time
 
-DELAY = 10 # MINUTES
+DELAY = 5 # MINUTES
 
 def check_who():
     res_who = subprocess.run(['/usr/bin/who'], capture_output=True)
@@ -26,14 +26,14 @@ def check_factorio(name):
         #last_line = file.readlines()[-1]
         r = 0
         for line in line_list:
-            print(r, line)
+            # print(r, line)
             # Players (3):
             if "Players (" in line:
                 break
             if "(online)" in line:
                 r += 1
         if r > 0:
-            print(f"There are {r} playrs online in factorio.")
+            print(f"There are {r} playrs online in {name}.")
             return r
         else:
             return 0
@@ -82,7 +82,7 @@ funclist.append(lambda: check_minecraft("/home/camilo/minecraft/logs/latest.log"
 reslist = [0]*len(funclist)
 
 if __name__ == "__main__":
-    checkAll()
-    print(funclist)
-    # shutdown_query()
-    pass
+    # checkAll()
+    # print(reslist)
+    shutdown_query()
+
