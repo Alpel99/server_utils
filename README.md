@@ -53,6 +53,7 @@ Using screen -X stuff and a newline char at the end of command to execute.
 /usr/bin/screen -S minecraft -X stuff "/list^M"
 ```
 
-## ToDo
+## server status
 
-* make the query easy to implement for multiple mc servers
+* hosts a webserver for json request of server status
+* used for [eink display](https://github.com/Alpel99/eink_status)
