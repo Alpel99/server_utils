@@ -11,9 +11,9 @@ def check_who():
     names = [line.split(None, 1)[0] for line in r.splitlines()]
     if len(names) > 0:
         print(f"The following users are on the server: {names}")
-        return True
+        return len(names)
     else:
-        return False
+        return 0
 
 
 def check_factorio(name):
@@ -34,9 +34,9 @@ def check_factorio(name):
                 r += 1
         if r > 0:
             print(f"There are {r} playrs online in factorio.")
-            return True
+            return r
         else:
-            return False
+            return 0
 
 def check_minecraft(path):
     # alternative: get https://mcapi.us/server/status?ip=alpel.ddns.net&port=65432
@@ -48,44 +48,41 @@ def check_minecraft(path):
     end_index = last_line.find("of", start_index)
     if start_index != -1 and end_index != -1:
         resmc = last_line[start_index:end_index].strip()
-        print("Extracted value:", resmc)
+        # print("Extracted value:", resmc)
     else:
         print("MC substring error")
-        return True
+        return False
     if int(resmc) > 0:
         print(f"There are {resmc} players online in minecraft")
-        return True
+        return int(resmc)
     else:
-        return False
+        return 0
 
 def checkAll():
     global funclist
     r = False
-    for f in funclist:
+    for i,f in enumerate(funclist):
         t = f()
-        r = r or t
+        reslist[i] = t
+        r = r or True if t > 0 else r
+        # r = r or t
     return r
 
-if __name__ == "__main__":
-    global funclist
-    funclist = []
-
-    check_factorio("factorio_cse")
-    exit()
-        
-    funclist.append(lambda: check_who())
-    funclist.append(lambda: check_factorio("factorio_cse"))
-    funclist.append(lambda: check_factorio("factorio_adrian"))
-    funclist.append(lambda: check_minecraft("/home/camilo/minecraft/logs/latest.log"))
-    print(checkAll())
-"""
+def shutdown_query():
     if(not checkAll()):
         time.sleep(DELAY*60)
         if(not checkAll()):
             subprocess.run(["/bin/bash", "/home/camilo/utils/shutdown.sh"])
-"""    
-    #check_who()
-    #check_factorio("/home/camilo/factorio_adrian/factorio/player-data.json")
-    #check_minecraft("/home/camilo/minecraft/logs/latest.log")
-    #check_factorio("player-data.json")
-    #check_minecraft("latest.log")
+            
+funclist = []
+funclist.append(lambda: check_who())
+funclist.append(lambda: check_factorio("factorio_cse"))
+funclist.append(lambda: check_factorio("factorio_adrian"))
+funclist.append(lambda: check_minecraft("/home/camilo/minecraft/logs/latest.log"))
+reslist = [0]*len(funclist)
+
+if __name__ == "__main__":
+    checkAll()
+    print(funclist)
+    # shutdown_query()
+    pass

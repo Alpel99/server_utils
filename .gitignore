@@ -3,3 +3,4 @@ rules.v4
 player-data.json
 
 venv/
+__pycache__/
