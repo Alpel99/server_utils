@@ -15,6 +15,7 @@ Description=Utils to shutdown server if noone is online
 Type=forking
 User=camilo
 Group=camilo
+TimeoutSec=310
 ExecStart=/usr/bin/python3 home/camilo/utils/shutdown_query.py
 ```
 
